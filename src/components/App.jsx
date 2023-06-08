@@ -34,6 +34,9 @@ export class App extends React.Component {
   changeStatus = status => {
     this.setState({ status });
   };
+  showModalOnClick = url => {
+    this.setState({ showModal: true, largeImageURL: url });
+  };
   onModalClose = () => {
     this.setState({ showModal: false, largeImageURL: '' });
   };
