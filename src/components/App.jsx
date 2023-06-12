@@ -5,6 +5,7 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { api } from './Services/Services';
+
 export class App extends React.Component {
   state = {
     searchImg: ``,
@@ -14,12 +15,14 @@ export class App extends React.Component {
     showModal: false,
     largeImageUrl: ``,
   };
+
   componentDidUpdate(prevProps, prevState) {
     const { searchImg, page } = this.state;
     if (prevState.searchImg !== searchImg || prevState.page !== page) {
       api(searchImg, page, this.loadData, this.changeStatus);
     }
   }
+
   onSubmit = searchImg => {
     this.setState({ searchImg });
     this.setState({ data: [] });
@@ -27,7 +30,9 @@ export class App extends React.Component {
   };
   loadMore = page => {
     this.setState({ page: this.state.page + 1 });
+    return;
   };
+
   loadData = data => {
     this.setState({ data: [...this.state.data, ...data] });
   };
@@ -47,7 +52,7 @@ export class App extends React.Component {
         <Searchbar onSubmit={this.onSubmit} />
         <ImageGallery data={data} showModal={this.showModalOnClick} />
         {status === `pending` && <Loader />}
-        {data.length > 1 && <Button onClick={this.loadMore} />}
+        {status === `resolved` && <Button onClick={this.loadMore} />}
         {showModal && (
           <Modal
             largeImageURL={largeImageURL}
