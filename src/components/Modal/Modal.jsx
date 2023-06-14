@@ -10,15 +10,15 @@ export class Modal extends React.Component {
   }
   handleKeyDown = e => {
     if (e.keyCode === 27 || e.currentTarget === e.target) {
-      return this.props.onModalClose();
+      return this.props.onClick();
     }
   };
   render() {
-    const { largeImageURL } = this.props;
+    const { LargeImage } = this.props;
     return (
       <Overlay onClick={this.handleKeyDown}>
         <ModalBox>
-          <ImgXL src={largeImageURL} alt="large photo" />
+          <ImgXL src={LargeImage} alt="large photo" />
         </ModalBox>
       </Overlay>
     );
