@@ -12,10 +12,12 @@ export class App extends React.Component {
     page: 1,
     images: [],
     status: `idle`,
+    hits: [],
+    totalHits: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    let { query, page } = this.state;
+    let { query, page, images, hits, totalHits } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       this.setState({ status: `pending` });
@@ -37,6 +39,12 @@ export class App extends React.Component {
             images,
             status: `resolved`,
           });
+          this.setState(prev => ({
+            images,
+            status: `resolved`,
+            images: [...prev.images, ...hits],
+            handleClickLoadMore: this.state.page < Math.ceil(totalHits / 12),
+          }));
         })
         .catch(() => {
           this.setState({ status: `rejected` });
@@ -61,17 +69,10 @@ export class App extends React.Component {
     return (
       <>
         <Searchbar onSubmit={this.handleSubmit} />
-        {images.length !== 0 && (
-          <ImageGallery Images={images} showModal={this.showModalOnClick} />
-        )}
+        {images.length !== 0 && <ImageGallery Images={images} />}
         {status === `pending` && <Loader />}
-        {status === `resolved` && <Button onClick={this.handleClickLoadMore} />}
-        {showModal && (
-          <Modal
-            largeImageURL={largeImageURL}
-            onModalClose={this.onModalClose}
-          />
-        )}
+        {images.length < 12 || <Button onClick={this.handleClickLoadMore} />}
+        {showModal && <Modal largeImageURL={largeImageURL} />}
       </>
     );
   }
