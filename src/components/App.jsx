@@ -17,7 +17,7 @@ export class App extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    let { query, page, images, hits, totalHits } = this.state;
+    let { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       this.setState({ status: `pending` });
@@ -65,15 +65,13 @@ export class App extends React.Component {
     });
   };
   render() {
-    const { images, status, showModal, largeImageURL, totalHits } = this.state;
+    const { images, status, showModal, largeImageURL } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSubmit} />
         {images.length !== 0 && <ImageGallery Images={images} />}
         {status === `pending` && <Loader />}
-        {images.length < 12 || images.length < totalHits || (
-          <Button onClick={this.handleClickLoadMore} />
-        )}
+        {images.length < 12 || <Button onClick={this.handleClickLoadMore} />}
         {showModal && <Modal largeImageURL={largeImageURL} />}
       </>
     );
