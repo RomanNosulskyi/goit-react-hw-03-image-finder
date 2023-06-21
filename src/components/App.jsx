@@ -39,12 +39,12 @@ export class App extends React.Component {
             images,
             status: `resolved`,
           });
-          this.setState(prev => ({
-            images,
-            status: `resolved`,
-            images: [...prev.images, ...hits],
-            handleClickLoadMore: this.state.page < Math.ceil(totalHits / 12),
-          }));
+          // this.setState(prev => ({
+          //   images,
+          //   status: `resolved`,
+          //   images: [...prev.images, ...hits],
+          //   handleClickLoadMore: this.state.page < Math.ceil(totalHits / 12),
+          // }));
         })
         .catch(() => {
           this.setState({ status: `rejected` });
