@@ -71,7 +71,7 @@ export class App extends React.Component {
         <Searchbar onSubmit={this.handleSubmit} />
         {images.length !== 0 && <ImageGallery Images={images} />}
         {status === `pending` && <Loader />}
-        {images.length < 12 && images.length < totalHits && (
+        {images.length < 12 || images.length < totalHits || (
           <Button onClick={this.handleClickLoadMore} />
         )}
         {showModal && <Modal largeImageURL={largeImageURL} />}
